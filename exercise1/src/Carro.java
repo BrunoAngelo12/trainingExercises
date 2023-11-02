@@ -1,8 +1,8 @@
 public class Carro{
-    protected String marca;
-    protected String modelo;
-    protected int ano;
-    protected String cor;
+    private String marca;
+    private String modelo;
+    private int ano;
+    private String cor;
 
     public Carro(String marca, String modelo, int ano, String cor){
         this.marca = marca;
@@ -16,4 +16,19 @@ public class Carro{
         return "Carro [marca=" + marca + ", modelo=" + modelo + ", ano=" + ano + ", cor=" + cor + "]";
     }
 
+    public String getMarca() {
+        return marca;
+    }
+
+    public String getModelo() {
+        return modelo;
+    }
+
+    public int getAno() {
+        return ano;
+    }
+
+    public String getCor() {
+        return cor;
+    }
 }
