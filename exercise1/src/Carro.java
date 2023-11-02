@@ -15,7 +15,7 @@ public class Carro{
     public String toString() {
         return "Carro [marca=" + marca + ", modelo=" + modelo + ", ano=" + ano + ", cor=" + cor + "]";
     }
-
+//adicionado metodos get para obter o conteudo dos atributos que estão privados
     public String getMarca() {
         return marca;
     }
