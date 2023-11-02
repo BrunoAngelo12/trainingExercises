@@ -1,3 +1,4 @@
+package exercice1;
 public class Carro{
     private String marca;
     private String modelo;
@@ -31,4 +32,9 @@ public class Carro{
     public String getCor() {
         return cor;
     }
+
+    public void ligar(){
+        System.out.println("Carro ligado..");
+    }
+
 }
