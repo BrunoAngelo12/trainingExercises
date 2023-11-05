@@ -1,5 +1,7 @@
 package exercice2;
 
+import java.util.Set;
+
 public class ContaBancaria {
     private String numeroDaConta;
     private String nomeDoTitular;
@@ -43,5 +45,25 @@ public class ContaBancaria {
         return saldo;
     }
 
-    
+    public Set<ContaBancaria> transferir(Set<ContaBancaria> setContas, ContaBancaria c1, ContaBancaria c2, double valorTransferido){
+        if(valorTransferido < 0){
+            System.out.println("O valor não pode ser negativo..");
+        }else{
+            for(ContaBancaria x : setContas){
+                if(x.getNumeroDaConta().equals(c1.getNumeroDaConta())){//método .equals utilizado para comparação de conteúdo é o mais recomendável
+                    if(x.getSaldo() >= valorTransferido){
+                        x.sacar(valorTransferido);
+                        for(ContaBancaria y : setContas){
+                            if(y.getNumeroDaConta().equals(c2.getNumeroDaConta())){
+                                y.depositar(valorTransferido);
+                            }
+                        }
+                    }else{
+                        System.out.println("Saldo insuficiente..");
+                    }
+                }
+            }
+        }        
+        return setContas;
+    }
 }
