@@ -11,7 +11,7 @@ public class App {
         ContaBancaria conta1 = new ContaBancaria("0002-A", "Sandy Shelda", 1150.00);
         setContas.add(conta1);
         setContas = conta0.transferir(setContas, conta0, conta1, 50.00);
-        System.out.println(conta0.toString());
-        System.out.println(conta1.toString());
+        conta0.mostrarSaldo();
+
     }
 }

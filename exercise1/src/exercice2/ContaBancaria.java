@@ -66,4 +66,8 @@ public class ContaBancaria {
         }        
         return setContas;
     }
+
+    public void mostrarSaldo(){
+        System.out.printf("Conta: %s\nSaldo disponível: %.2f", this.numeroDaConta, this.saldo);
+    }
 }
