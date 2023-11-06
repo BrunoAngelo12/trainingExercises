@@ -10,8 +10,11 @@ public class App {
         setContas.add(conta0);
         ContaBancaria conta1 = new ContaBancaria("0002-A", "Sandy Shelda", 1150.00);
         setContas.add(conta1);
-        setContas = conta0.transferir(setContas, conta0, conta1, 50.00);
+        conta0.depositar(1000.00);
+        conta0.sacar(10.00);
         conta0.mostrarSaldo();
+        setContas = conta0.transferir(setContas, conta0, conta1, 50.00);
+        conta0.imprimirExtrato();
 
     }
 }
