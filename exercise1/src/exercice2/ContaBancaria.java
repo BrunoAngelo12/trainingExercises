@@ -9,6 +9,7 @@ public class ContaBancaria {
     private String nomeDoTitular;
     private double saldo;
     private List<String> extrato;
+    private double limiteChequeEspecial;
 
     public ContaBancaria(String numeroDaConta, String nomeDoTitular, double saldo){
         this.numeroDaConta = numeroDaConta;
@@ -25,7 +26,14 @@ public class ContaBancaria {
     }
 
     public void sacar(double valorParaSaque){
-        if(valorParaSaque <= this.saldo){
+        if (this.saldo - valorParaSaque < 0){
+            double limite = valorParaSaque - this.saldo;
+            double saldoFinal = this.limiteChequeEspecial - limite;
+            this.saldo = -limite;
+            System.out.println("Saque realizado com sucesso, cheque especial utilizado! Consulte seu saldo");
+            String saqueChequeEspecial = String.format("Saque efetuado no valor de %.2f através do cheque especial\n", valorParaSaque);
+            extrato.add(saqueChequeEspecial);
+        }else if(valorParaSaque <= this.saldo){
             this.saldo -= valorParaSaque;
             System.out.println("Saque realizado com sucesso!");
             String saqueExtrato = String.format("Saque efetuado no valor de %.2f\n", valorParaSaque);
@@ -82,9 +90,13 @@ public class ContaBancaria {
     }
 
     public void imprimirExtrato(){
-        System.out.printf("Extrato bancário %s\n", nomeDoTitular);
+        System.out.printf("Extrato bancário %s de\n", nomeDoTitular);
         for(String x : extrato){
             System.out.println(x);
         }
+    }
+
+    public void definirLimiteChequeEspecial(double limiteChequeEspecial){
+        this.limiteChequeEspecial = limiteChequeEspecial;
     }
 }
