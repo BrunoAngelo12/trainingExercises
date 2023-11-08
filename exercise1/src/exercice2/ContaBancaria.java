@@ -1,5 +1,7 @@
 package exercice2;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -17,11 +19,15 @@ public class ContaBancaria {
         this.saldo = saldo;
         extrato = new ArrayList<String>();
     }
+
+    DateTimeFormatter formatoDataHora = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
     
     public void depositar(double valorDeposito){
         this.saldo += valorDeposito;
+        LocalDateTime horarioDeposito = LocalDateTime.now();
+        String horarioDepositoString = horarioDeposito.format(formatoDataHora);
         System.out.println("Depósito realizado com sucesso!");
-        String depositoExtrato = String.format("Depósito efetuado no valor de %.2f.\n", valorDeposito);
+        String depositoExtrato = String.format("Depósito efetuado no valor de %.2f às %s.\n", valorDeposito, horarioDepositoString);
         extrato.add(depositoExtrato);
     }
 
@@ -30,11 +36,15 @@ public class ContaBancaria {
             double limite = valorParaSaque - this.saldo;
             double saldoFinal = this.limiteChequeEspecial - limite;
             this.saldo = -limite;
-            System.out.println("Saque realizado com sucesso, cheque especial utilizado! Consulte seu saldo");
+            LocalDateTime horarioSaque = LocalDateTime.now();
+            String horarioSaqueString = horarioSaque.format(formatoDataHora);
+            System.out.println("Saque realizado com sucesso através do cheque especial às " + horarioSaqueString + "Consulte seu saldo");
             String saqueChequeEspecial = String.format("Saque efetuado no valor de %.2f através do cheque especial\n", valorParaSaque);
             extrato.add(saqueChequeEspecial);
         }else if(valorParaSaque <= this.saldo){
             this.saldo -= valorParaSaque;
+            LocalDateTime horarioSaque = LocalDateTime.now();
+            String horarioSaqueString = horarioSaque.format(formatoDataHora);
             System.out.println("Saque realizado com sucesso!");
             String saqueExtrato = String.format("Saque efetuado no valor de %.2f\n", valorParaSaque);
             extrato.add(saqueExtrato);
@@ -72,10 +82,12 @@ public class ContaBancaria {
                         for(ContaBancaria y : setContas){
                             if(y.getNumeroDaConta().equals(c2.getNumeroDaConta())){
                                 y.depositar(valorTransferido);
+                                LocalDateTime horarioTransferencia = LocalDateTime.now();
+                                String horarioTransferenciaString = horarioTransferencia.format(formatoDataHora);
+                                String transferenciaExtrato = String.format("Transferência no valor de: %.2f realizado para conta: %s às %s\n", valorTransferido, c2.getNumeroDaConta(), horarioTransferenciaString);
+                                extrato.add(transferenciaExtrato);
                             }
                         }
-                        String transferenciaExtrato = String.format("Transferência no valor de: %.2f realizado para conta: %s \n", valorTransferido, c2.getNumeroDaConta());
-                        extrato.add(transferenciaExtrato);
                     }else{
                         System.out.println("Saldo insuficiente..");
                     }
@@ -90,13 +102,17 @@ public class ContaBancaria {
     }
 
     public void imprimirExtrato(){
-        System.out.printf("Extrato bancário %s de\n", nomeDoTitular);
+        System.out.printf("Extrato bancário de %s\n", nomeDoTitular);
         for(String x : extrato){
             System.out.println(x);
         }
     }
 
     public void definirLimiteChequeEspecial(double limiteChequeEspecial){
-        this.limiteChequeEspecial = limiteChequeEspecial;
+        if(limiteChequeEspecial > 0){
+            this.limiteChequeEspecial = limiteChequeEspecial;
+        }else{
+            System.out.println("Limite de cheque especial não pode ser negativo");
+        }
     }
 }
